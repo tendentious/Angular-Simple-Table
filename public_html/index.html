@@ -6,18 +6,34 @@
         <link rel="shortcut icon" href="favicon.ico">
     </head>
     <body  ng-controller="main-controller">
-        <table data-simple-table data-table-settings="settings" class="mainTable">
-                <tr title="'asd'" data-wew="wqq" ng-repeat="t in test ">
-                    <td title="Name" data-sort-by="Name">
+        <table data-simple-table data-table-settings="myTableSettings" class="mainTable">
+                <tr ng-repeat="t in myTableSettings.getData() track by $index">
+                    <td title="First" data-sort-by="Name">
                         {{t.first}}
                     </td>
-                    <td  title='Country' data-sort-by="Country">
+                    <td  title='Second' data-sort-by="Country">
                         {{t.second}}
                     </td> 
-                    <td title='Age'>
+                    <td title='Third'>
                         {{t.third}} 
                     </td>   
                 </tr> 
+        </table>
+        <table data-simple-table data-table-settings="myTableSettings2" class="mainTableUsers">
+                <tr ng-repeat="t in myTableSettings2.getData() track by $index">
+                    <td title="#" data-sort-by="id">
+                        {{t.id}}
+                    </td>
+                    <td title="Name" data-sort-by="Name">
+                        {{t.name}}
+                    </td>
+                    <td  title='Country' data-sort-by="Country">
+                        {{t.country}}
+                    </td>
+                    <td title='Age'>
+                        {{t.age}}
+                    </td>
+                </tr>
         </table>
 <!--        <table  class="table">
             <tr> 
