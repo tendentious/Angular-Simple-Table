@@ -27,4 +27,32 @@ td,th{
     border:1px solid black;
     width:25%;
 }
-
+.active{
+    background-color: #ddd;
+}
+nav ul{
+    margin-top: 40px;
+    list-style-type: none;
+    text-align: center;
+}
+nav li>a{
+    text-decoration: none;
+    color: #000;
+    font-size: 18px;
+    display: block;
+    padding: 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+nav li>a:hover{
+    background-color:#dddddd;
+}
+nav li {
+    display: inline-block;
+}
+.disabled {
+    pointer-events: none;
+    cursor: default;
+}

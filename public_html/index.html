@@ -6,19 +6,6 @@
         <link rel="shortcut icon" href="favicon.ico">
     </head>
     <body  ng-controller="main-controller">
-        <table data-simple-table data-table-settings="myTableSettings" class="mainTable">
-                <tr ng-repeat="t in myTableSettings.getData() track by $index">
-                    <td title="First" data-sort-by="Name">
-                        {{t.first}}
-                    </td>
-                    <td  title='Second' data-sort-by="Country">
-                        {{t.second}}
-                    </td> 
-                    <td title='Third'>
-                        {{t.third}} 
-                    </td>   
-                </tr> 
-        </table>
         <table data-simple-table data-table-settings="myTableSettings2" class="mainTableUsers">
                 <tr ng-repeat="t in myTableSettings2.getData() track by $index">
                     <td title="#" data-sort-by="id">
@@ -34,6 +21,42 @@
                         {{t.age}}
                     </td>
                 </tr>
+        </table>
+
+        <nav>
+            <ul  class="pagination" >
+                <!--First Page-->
+                <li ng-click="myTableSettings2.setCurrentPage(1)">
+                    <a href="javascript:void(0)" >
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li ng-repeat="page in myTableSettings2.getTotalPagesArray() track by $index"  ng-class="{disabled:$index+1 == myTableSettings2.getCurrentPage()}"   ng-click="myTableSettings2.setCurrentPage($index+1)" >
+                    <a href="javascript:void(0)" ng-class="{active:$index+1 == myTableSettings2.getCurrentPage() }">
+                        <span aria-hidden="true">{{$index+1}}</span>
+                    </a>
+                </li>
+                <!--Last Page-->
+                <li  ng-click="myTableSettings2.setCurrentPage(myTableSettings2.getTotalPages())" >
+                    <a href="javascript:void(0)" >
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <table data-simple-table data-table-settings="myTableSettings" class="mainTable">
+            <tr ng-repeat="t in myTableSettings.getData() track by $index">
+                <td title="First" data-sort-by="First">
+                {{t.first}}
+                </td>
+                <td  title='Second' data-sort-by="Second">
+                {{t.second}}
+                </td>
+                <td title='Third'>
+                {{t.third}}
+                </td>
+            </tr>
         </table>
 <!--        <table  class="table">
             <tr> 
@@ -69,25 +92,7 @@
             </tr>
         </table>    -->
         
-        <nav>
-            <ul  class="pagination" > 
-              <li ng-repeat="page in getPagesNumber() track by $index"  ng-class="{disabled:$index+1 == myfilter.page}"   ng-click="myfilter.page = $index+1" >
-                  <a href="javascript:void(0)" ng-if="$first"> 
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <li ng-repeat="page in getPagesNumber() track by $index"  ng-class="{disabled:$index+1 == myfilter.page}"   ng-click="myfilter.page = $index+1" >
-                <a href="javascript:void(0)" > 
-                    <span aria-hidden="true">{{$index+1}}</span>
-                </a>
-              </li>
-              <li ng-repeat="page in getPagesNumber() track by $index"  ng-class="{disabled:$index+1 == myfilter.page}"   ng-click="myfilter.page = $index+1" >
-                  <a href="javascript:void(0)" ng-if="$last"> 
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+
         
         
         

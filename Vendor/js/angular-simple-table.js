@@ -9,6 +9,8 @@ angular.module("angular-simple-table",[])
         this.getItemsPerPage = function(){return itemsPerPage;};
         this.getCurrentPage = function(){return currentPage;};
         this.setCurrentPage = function(nr){currentPage = nr;};
+        this.getTotalPagesArray = function(){return new Array(Math.ceil(data.length/itemsPerPage))};
+        this.getTotalPages = function(){return Math.ceil(data.length/itemsPerPage)};
         this.setData = function(data){ this.data = data; };
         this.getData = function(){
             var filteredData = data;
@@ -47,12 +49,19 @@ angular.module("angular-simple-table",[])
                      //select tr from thead
                     var headRow = $scope.table.children[0];
                     headRow.innerHTML='';
-                    allTd = row.children;
+                    allTds = row.children;
                     var tr = document.createElement("tr");
-                    for(var item in allTd){
-                        if(allTd.hasOwnProperty(item)){
+                    for(var item in allTds){
+                        if(allTds.hasOwnProperty(item)){
                             var th = document.createElement("th");
-                            th.innerHTML = allTd[item].getAttribute("title");
+
+                            dataSort = allTds[item].getAttribute("data-sort-by");
+                            if(dataSort){
+                                //TODO add sortable
+                            }else{
+                                th.innerHTML = allTds[item].getAttribute("title");
+                            }
+
                             tr.appendChild(th);
                         }
                     }
