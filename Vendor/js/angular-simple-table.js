@@ -1,24 +1,33 @@
 angular.module("angular-simple-table",[])
-
 .directive('simpleTable',['$filter','$compile', function($filter,$compile) {
     window.TableSettings = function (data){
-        this.data = data;
+        this.data = data || null;
         this.reverseSort = false;
         this.orderField = null;
         var search = {};
-        var itemsPerPage = 25;
+        this.itemsPerPage = 25;
         var currentPage = 1;
-        var filteredData = data;
-        this.setItemsPerPage = function(limit){ itemsPerPage = limit; };
-        this.getItemsPerPage = function(){return itemsPerPage;};
+        var filteredData = null;
         this.getCurrentPage = function(){return currentPage;};
         this.setCurrentPage = function(nr){currentPage = nr;};
-        this.getTotalPagesArray = function(){return new Array(Math.ceil(data.length/itemsPerPage))};
-        this.getTotalPages = function(){return Math.ceil(filteredData.length/itemsPerPage)};
+        this.getTotalPagesArray = function(){
+            if(filteredData){
+                return new Array(Math.ceil(filteredData.length/this.itemsPerPage))};
+            }
+        this.getTotalPages = function(){
+            if(filteredData){
+                return Math.ceil(filteredData.length/this.itemsPerPage)
+            }
+        };
         this.getFilteredData = function(){
-            //filter Current Page and Number of Items Per Page
-            var startIndex = (currentPage - 1) * itemsPerPage;
-            return filteredData.slice(startIndex,startIndex + itemsPerPage);
+            if(filteredData && this.data ){
+                //filter Current Page and Number of Items Per Page
+                var startIndex = (currentPage - 1) * this.itemsPerPage;
+                return filteredData.slice(startIndex,startIndex + this.itemsPerPage);
+            }else{
+                filteredData = this.data;
+            }
+
         };
         this.searchBy = function (text,field){
             //removes ordering filter and resets page to 1
@@ -28,22 +37,26 @@ angular.module("angular-simple-table",[])
             search[name] =   text ;
             filteredData = $filter('filter')(this.data, search, false);
         }
-        this.orderBy = function(field){
+        this.orderBy = function(field,alternateReverse){
             this.orderField = field;
-            this.reverseSort = !this.reverseSort;
+            var keepReverseState = alternateReverse || false;
+            if(!keepReverseState){
+                this.reverseSort = !this.reverseSort;
+            }
             filteredData = $filter('orderBy')(filteredData, field.toLowerCase(), this.reverseSort);
         };
     };
 
+
     var link = function(scope, iElement, iAttrs,nullController, transclude){
             $compile(iElement);
         //assign the table to directive's isolated scope
-        var table = document.querySelectorAll('[data-table-settings]');
-        var tableSettings = iAttrs['tableSettings'];
+        var table = document.querySelectorAll('[simple-table]');
+        var simpleTable = iAttrs['simpleTable'];
         for(var item in table){
             if(table.hasOwnProperty(item)){
                 var currentItem = table[item];
-                if(iAttrs['tableSettings'] === currentItem.getAttribute("data-table-settings") && currentItem.tagName === "TABLE"){
+                if(iAttrs['simpleTable'] === currentItem.getAttribute("simple-table") && currentItem.tagName === "TABLE"){
                     scope.table = table[item];
                 };
             }
@@ -74,9 +87,9 @@ angular.module("angular-simple-table",[])
                             var dataSort = allTds[item].getAttribute("data-sort-by");
                             if(dataSort){
                                 var title = allTds[item].getAttribute("data-sort-by");
-                                th.innerHTML = '<a href="javascript:void(0)" ng-click="'+tableSettings+'.orderBy(\''+title+'\')" >'+
+                                th.innerHTML = '<a href="javascript:void(0)" ng-click="'+simpleTable+'.orderBy(\''+title+'\')" >'+
                                 //th.innerHTML = '<a href="javascript:void(0)" ng-click="log()" >'+
-                                    title + '&nbsp;&nbsp;<span ng-show="' + tableSettings+'.orderField == \''+title+'\'"><span ng-show="!'+tableSettings+'.reverseSort">&#9650;</span><span ng-show="'+tableSettings+'.reverseSort">&#9660;</span></span></a>' ;
+                                    title + '&nbsp;&nbsp;<span ng-show="' + simpleTable+'.orderField == \''+title+'\'"><span ng-show="!'+simpleTable+'.reverseSort">&#9650;</span><span ng-show="'+simpleTable+'.reverseSort">&#9660;</span></span></a>' ;
                             }else{
                                 th.innerHTML = allTds[item].getAttribute("title");
                             }
@@ -94,7 +107,7 @@ angular.module("angular-simple-table",[])
 
     return {
         scope:{
-                tableSettings: "&"
+                simpleTable: "&"
         },
         //priority:1001,
         restrict: 'EA',

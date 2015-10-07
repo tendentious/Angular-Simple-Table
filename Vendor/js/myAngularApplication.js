@@ -6,36 +6,33 @@ angular.module("myApp",["angular-simple-table"]).
             {"id":2,"name":"Mary","country":"Germany","age":24},
             {"id":3,"name":"Alex","country":"France","age":34},
             {"id":4,"name":"Frank","country":"U.S.A.","age":65},
-            {"id":5,"name":"Mario","country":"Italy","age":40}
+            {"id":5,"name":"Mario","country":"Italy","age":40},
+            {"id":6,"name":"Henry","country":"U.K.","age":65},
+            {"id":7,"name":"Jaque","country":"France","age":52},
+            {"id":8,"name":"Karl","country":"Austria","age":53},
+            {"id":9,"name":"Abdul","country":"Iraq","age":63},
+            {"id":10,"name":"Igor","country":"Russia","age":33},
+            {"id":11,"name":"Jugo","country":"Spain","age":28}
         ];
 
-            $scope.test = [{"first":1,"second":2,"third":3},
-            {"first":41,"second":42,"third":43},
-            {"first":21,"second":22,"third":23}
-                ];
-
         //$timeout(function(){
-        //    $scope.myTableSettings2.setCurrentPage(2);
+        //    $scope.myTableSettings.data = $scope.users;
         //    $scope.$digest();
-        //},2000);
+        //},1000);
         //setInterval(function(){
-        //    console.log("interval");
+        //    console.log($scope.myTableSettings.data);
         //    if($scope.myTableSettings.data == false){
-        //        $scope.myTableSettings.data = $scope.test;
-        //        $scope.myTableSettings2.data = $scope.users;
-        //        $scope.$digest();}
+        //        $scope.myTableSettings.data = $scope.users;
+        //        $scope.$digest();
+        //    }
         //    else{
         //        $scope.myTableSettings.data = false;
-        //        $scope.myTableSettings2.data = false;
         //        $scope.$digest();
         //    }
         //},1000);
-        console.log("main");
-        $scope.myTableSettings = new TableSettings($scope.test);
-        $scope.myTableSettings2 = new TableSettings($scope.users);
-        $scope.myTableSettings2.setItemsPerPage(3);
-        $scope.myTableSettings2.setCurrentPage(1);
-        //$scope.myTableSettings = new TableSettings(1);
-        //$scope.myTableSettings2 = new TableSettings(2);
+        $scope.myTableSettings = new TableSettings($scope.users);
+        $scope.myTableSettings.itemsPerPage = 3;
+
+        $scope.selectOptions = [1,3,5,10];
 
     }]);
