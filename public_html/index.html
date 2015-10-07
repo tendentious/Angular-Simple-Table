@@ -6,9 +6,24 @@
         <link rel="shortcut icon" href="favicon.ico">
     </head>
     <body  ng-controller="main-controller">
-        <table data-simple-table data-table-settings="myTableSettings2" class="mainTableUsers">
-                <tr ng-repeat="t in myTableSettings2.getData() track by $index">
-                    <td title="#" data-sort-by="id">
+        <div class="filters">
+            <div class="filter">
+                <label for="sgeneral">General Search</label>
+                <input type="text" id="sgeneral" ng-model="mySearch" ng-change="myTableSettings2.searchBy(mySearch)" >
+            </div>
+            <div class="filter">
+                <label for="sname">Name Search</label>
+                <input type="text" id="sname" ng-model="nameSearch" ng-change="myTableSettings2.searchBy(nameSearch,'name')" >
+            </div>
+            <div class="filter">
+                <label for="scountry">Country Search</label>
+                <input type="text" id="scountry" ng-model="countrySearch" ng-change="myTableSettings2.searchBy(countrySearch,'country')" >
+            </div>
+        </div>
+
+        <table simple-table="myTableSettings2" data-table-settings="myTableSettings2" class="mainTableUsers"  >
+                <tr ng-repeat="t in myTableSettings2.getFilteredData() track by $index">
+                    <td title="#" data-sort-by="Id">
                         {{t.id}}
                     </td>
                     <td title="Name" data-sort-by="Name">
@@ -23,7 +38,7 @@
                 </tr>
         </table>
 
-        <nav>
+        <nav ng-if="myTableSettings2.getTotalPages() > 1">
             <ul  class="pagination" >
                 <!--First Page-->
                 <li ng-click="myTableSettings2.setCurrentPage(1)">
@@ -46,7 +61,7 @@
         </nav>
 
         <table data-simple-table data-table-settings="myTableSettings" class="mainTable">
-            <tr ng-repeat="t in myTableSettings.getData() track by $index">
+            <tr ng-repeat="t in myTableSettings.getFilteredData() track by $index">
                 <td title="First" data-sort-by="First">
                 {{t.first}}
                 </td>
@@ -58,44 +73,7 @@
                 </td>
             </tr>
         </table>
-<!--        <table  class="table">
-            <tr> 
-                <th>
-                    <a href="javascript:void(0)" ng-click="orderBy('index',!reverseSort)" ng-init="reverseSort">
-                    #&nbsp;&nbsp;<span ng-show="field == 'index'"><span ng-show="!reverseSort">&#9650;</span><span ng-show="reverseSort">&#9660;</span></span>
-                    </a> 
-                </th>
-                <th>
-                    <a href="javascript:void(0)" ng-click="orderBy('order_id',!reverseSort)" ng-init="reverseSort">
-                    <?php echo $text_invoice;?>&nbsp;&nbsp;<span ng-show="field == 'order_id'"><span ng-show="!reverseSort">&#9650;</span><span ng-show="reverseSort">&#9660;</span></span>
-                    </a> 
-                </th>
-                <th>
-                    <a href="javascript:void(0)" ng-click="orderBy('date',!reverseSort)" ng-init="reverseSort">
-                    <?php echo $text_invoice_date;?>&nbsp;&nbsp;<span ng-show="field == 'date'"><span ng-show="!reverseSort">&#9650;</span><span ng-show="reverseSort">&#9660;</span></span>
-                    </a> 
-                </th> 
-                <th>Download</th>
-            </tr>
-            <tr ng-repeat="invoice in result = (finalData() | limitTo:myfilter.nrPerPage) track by $index ">
-                <td  >
-                    {{invoice.index}}
-                </td>
-                <td  >
-                    {{invoice.order_id}}
-                </td> 
-                <td >
-                    {{invoice.formatted_date}} 
-                </td> 
-                <td  class="state" ng-bind-html="invoice.link">  
-                </td>
-            </tr>
-        </table>    -->
-        
 
-        
-        
-        
         <script src="../Vendor/JS/angular.min.js" type="text/javascript"></script>
         <script src="../Vendor/JS/angular-simple-table.js" type="text/javascript"></script>
         <script src="../Vendor/JS/myAngularApplication.js" type="text/javascript"></script>

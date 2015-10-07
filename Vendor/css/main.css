@@ -56,3 +56,13 @@ nav li {
     pointer-events: none;
     cursor: default;
 }
+.filters{
+    text-align: center;
+}
+.filter{
+    display:inline-block;
+    margin-left: 50px;
+}
+.filter > label {
+    display:block;
+}

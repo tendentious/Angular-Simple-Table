@@ -5,7 +5,7 @@ angular.module("myApp",["angular-simple-table"]).
             {"id":1,"name":"John","country":"Romania","age":22},
             {"id":2,"name":"Mary","country":"Germany","age":24},
             {"id":3,"name":"Alex","country":"France","age":34},
-            {"id":4,"name":"Frank","country":"U.S.","age":65},
+            {"id":4,"name":"Frank","country":"U.S.A.","age":65},
             {"id":5,"name":"Mario","country":"Italy","age":40}
         ];
 
@@ -16,7 +16,7 @@ angular.module("myApp",["angular-simple-table"]).
 
         //$timeout(function(){
         //    $scope.myTableSettings2.setCurrentPage(2);
-        //    //$scope.$digest();
+        //    $scope.$digest();
         //},2000);
         //setInterval(function(){
         //    console.log("interval");
@@ -30,7 +30,6 @@ angular.module("myApp",["angular-simple-table"]).
         //        $scope.$digest();
         //    }
         //},1000);
-
         console.log("main");
         $scope.myTableSettings = new TableSettings($scope.test);
         $scope.myTableSettings2 = new TableSettings($scope.users);
