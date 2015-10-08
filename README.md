@@ -1,5 +1,5 @@
 # Angular-Simple-Table
-A simple table module with sorting and filters for general use.
+A simple table module with sorting and filters for general use. This project uses Angular JS v1.4.7 .
 
 Working example on : http://plnkr.co/sJUFaBLVlfIFVhwBmAqC?p=info
   
