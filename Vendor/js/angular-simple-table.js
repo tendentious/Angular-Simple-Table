@@ -48,7 +48,7 @@ angular.module("angular-simple-table",[])
     };
 
 
-    var link = function(scope, iElement, iAttrs,nullController, transclude){
+    var link = function(scope, iElement, iAttrs){
             $compile(iElement);
         //assign the table to directive's isolated scope
         var table = document.querySelectorAll('[simple-table]');
@@ -80,6 +80,7 @@ angular.module("angular-simple-table",[])
                     headRow.innerHTML='';
                     var allTds = row.children;
                     var tr = document.createElement("tr");
+                    //add th to thead
                     for(var item in allTds){
                         if(allTds.hasOwnProperty(item)){
                             var th = document.createElement("th");
@@ -88,8 +89,7 @@ angular.module("angular-simple-table",[])
                             if(dataSort){
                                 var title = allTds[item].getAttribute("data-sort-by");
                                 th.innerHTML = '<a href="javascript:void(0)" ng-click="'+simpleTable+'.orderBy(\''+title+'\')" >'+
-                                //th.innerHTML = '<a href="javascript:void(0)" ng-click="log()" >'+
-                                    title + '&nbsp;&nbsp;<span ng-show="' + simpleTable+'.orderField == \''+title+'\'"><span ng-show="!'+simpleTable+'.reverseSort">&#9650;</span><span ng-show="'+simpleTable+'.reverseSort">&#9660;</span></span></a>' ;
+                                title + '&nbsp;&nbsp;<span ng-show="' + simpleTable+'.orderField == \''+title+'\'"><span ng-show="!'+simpleTable+'.reverseSort">&#9650;</span><span ng-show="'+simpleTable+'.reverseSort">&#9660;</span></span></a>' ;
                             }else{
                                 th.innerHTML = allTds[item].getAttribute("title");
                             }
@@ -100,7 +100,6 @@ angular.module("angular-simple-table",[])
                     //compiled the data to the parent scope
                     var compiled = $compile(tr)(scope.$parent);
                     headRow.appendChild(compiled[0]);
-                    //$compile(iElement);
                 }
         });
     };
@@ -109,7 +108,6 @@ angular.module("angular-simple-table",[])
         scope:{
                 simpleTable: "&"
         },
-        //priority:1001,
         restrict: 'EA',
         template: '',
         link: link,
