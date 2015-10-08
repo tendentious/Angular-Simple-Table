@@ -29,7 +29,7 @@
         <!--simple-table attribute passes the settings-->
         <table simple-table="myTableSettings" class="mainTableUsers"  >
                 <tr ng-repeat="person in myTableSettings.getFilteredData() track by $index">
-                    <td title="#" data-sort-by="Id">
+                    <td title="Id" data-sort-by="Id">
                         {{person.id}}
                     </td>
                     <td title="Name" data-sort-by="Name">
