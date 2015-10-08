@@ -1,6 +1,6 @@
 angular.module("myApp",["angular-simple-table"]).
 
-    controller('main-controller',["$scope",'$timeout',function($scope,$timeout){
+    controller('main-controller',["$scope",function($scope){
         $scope.users = [
             {"id":1,"name":"John","country":"Romania","age":22},
             {"id":2,"name":"Mary","country":"Germany","age":24},
@@ -15,21 +15,7 @@ angular.module("myApp",["angular-simple-table"]).
             {"id":11,"name":"Jugo","country":"Spain","age":28}
         ];
 
-        //$timeout(function(){
-        //    $scope.myTableSettings.data = $scope.users;
-        //    $scope.$digest();
-        //},1000);
-        //setInterval(function(){
-        //    console.log($scope.myTableSettings.data);
-        //    if($scope.myTableSettings.data == false){
-        //        $scope.myTableSettings.data = $scope.users;
-        //        $scope.$digest();
-        //    }
-        //    else{
-        //        $scope.myTableSettings.data = false;
-        //        $scope.$digest();
-        //    }
-        //},1000);
+
         $scope.myTableSettings = new TableSettings($scope.users);
         $scope.myTableSettings.itemsPerPage = 3;
 
