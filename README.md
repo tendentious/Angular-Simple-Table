@@ -44,7 +44,7 @@ For the table content loop through the filtered data of the table settings varia
         <td title='Age'>
             {{person.age}}
         </td>
-  </tr>
+    </tr>
 
 Note the attributes of the columns maked by the td elements in the ng-repeat directive. 
 The title attribute is the name of the column that will appear in the Table Head. 
