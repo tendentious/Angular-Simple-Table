@@ -36,7 +36,7 @@ angular.module("angular-simple-table",[])
             var name = field || '$';
             search[name] =   text ;
             filteredData = $filter('filter')(this.data, search, false);
-        }
+        };
         this.orderBy = function(field,noReverse){
             this.orderField = field;
             var keepReverseState = noReverse || false;
