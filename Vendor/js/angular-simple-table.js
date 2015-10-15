@@ -88,8 +88,8 @@ angular.module("angular-simple-table",[])
                             var dataSort = allTds[item].getAttribute("data-sort-by");
                             if(dataSort){
                                 var title = allTds[item].getAttribute("title") || '';
-                                th.innerHTML = '<a href="javascript:void(0)" ng-click="'+simpleTable+'.orderBy(\''+title+'\')" >'+
-                                title + '&nbsp;&nbsp;<span ng-show="' + simpleTable+'.orderField == \''+title+'\'"><span ng-show="!'+simpleTable+'.reverseSort">&#9650;</span><span ng-show="'+simpleTable+'.reverseSort">&#9660;</span></span></a>' ;
+                                th.innerHTML = '<a href="javascript:void(0)" ng-click="'+simpleTable+'.orderBy(\''+dataSort+'\')" >'+
+                                title + '&nbsp;&nbsp;<span ng-show="' + simpleTable+'.orderField == \''+dataSort+'\'"><span ng-show="!'+simpleTable+'.reverseSort">&#9650;</span><span ng-show="'+simpleTable+'.reverseSort">&#9660;</span></span></a>' ;
                             }else{
                                 th.innerHTML = allTds[item].getAttribute("title");
                             }
