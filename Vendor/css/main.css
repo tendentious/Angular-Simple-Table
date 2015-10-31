@@ -1,5 +1,5 @@
 body{
-    color:blue;
+    color:black;
 }
 
 tbody{
@@ -12,20 +12,19 @@ th> a{
 td,th{
     padding:10px;
 }
-.mainTable,.mainTableUsers{
+.mainTableUsers{
     margin:0 auto;
     margin-top:80px;
     text-align: center;
     min-width: 70%;
     border:1px solid black
 }
-.mainTable td, .mainTable th{
-    border:1px solid black;
-    width:33%;
-}
 .mainTableUsers td, .mainTableUsers th{
     border:1px solid black;
-    width:25%;
+    width:15%;
+}
+.mainTableUsers th{
+    color:grey;
 }
 .active{
     background-color: #ddd;
@@ -65,4 +64,7 @@ nav li {
 }
 .filter > label {
     display:block;
+}
+b{
+    color:#0d3349;
 }

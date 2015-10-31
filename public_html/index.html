@@ -10,15 +10,19 @@
         <div class="filters">
             <div class="filter">
                 <label for="sgeneral">General Search</label>
-                <input type="text" id="sgeneral" ng-model="mySearch" ng-change="myTableSettings.searchBy(mySearch)" >
+                <input type="text" id="sgeneral" ng-model="mySearch" ng-change="myTableSettings.search(mySearch)" >
             </div>
             <div class="filter">
                 <label for="sname">Name Search</label>
-                <input type="text" id="sname" ng-model="nameSearch" ng-change="myTableSettings.searchBy(nameSearch,'name')" >
+                <input type="text" id="sname" ng-model="nameSearch" ng-change="myTableSettings.search(nameSearch,'name')" >
             </div>
             <div class="filter">
                 <label for="scountry">Country Search</label>
-                <input type="text" id="scountry" ng-model="countrySearch" ng-change="myTableSettings.searchBy(countrySearch,'country')" >
+                <input type="text" id="scountry" ng-model="countrySearch" ng-change="myTableSettings.search(countrySearch,'country')" >
+            </div>
+            <div class="filter">
+                <label for="scountry">Eye Color Search</label>
+                <input type="text" id="seye" ng-model="eyeColorSearch" ng-change="myTableSettings.search(eyeColorSearch,'description.eye_color')" >
             </div>
             <div class="filter">
                 <label for="displayPerPage">Results per page:</label>
@@ -34,6 +38,13 @@
                     </td>
                     <td title="Name" data-sort-by="Name">
                         {{person.name}}
+                    </td>
+                    <!--not sortable-->
+                    <td title="Description">
+                        <span ng-repeat="description in person.description">
+                           <p>Hair color: {{description.hair_color}}  </p>
+                           <p>Eye color: <b>{{description.eye_color}} </b> </p>
+                        </span>
                     </td>
                     <td  title='Country' data-sort-by="Country">
                         {{person.country}}
