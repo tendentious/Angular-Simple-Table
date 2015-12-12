@@ -2,7 +2,7 @@ angular.module("myApp",["angular-simple-table"]).
 
     controller('main-controller',["$scope",function($scope){
         $scope.users = [
-            {id:1,name:"John",country:"Romania",age:22,description:[{hair_color:"black",eye_color:"blue"}]},
+            {id:1,name:"John",country:"Sweden",age:22,description:[{hair_color:"black",eye_color:"blue"}]},
             {id:2,name:"Mary",country:"Germany",age:24,description:[{hair_color:"red",eye_color:"green"}]},
             {id:3,name:"Alex",country:"France",age:34,description:[{hair_color:"blonde",eye_color:"black"}]},
             {id:4,name:"Frank",country:"U.S.A.",age:65,description:[{hair_color:"black",eye_color:"black"}]},
@@ -17,7 +17,7 @@ angular.module("myApp",["angular-simple-table"]).
 
 
         $scope.myTableSettings = new TableSettings($scope.users);
-        $scope.myTableSettings.itemsPerPage = 3;
+        $scope.myTableSettings.setRows(3);
 
         $scope.selectOptions = [1,3,5,10];
 

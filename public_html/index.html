@@ -26,7 +26,7 @@
             </div>
             <div class="filter">
                 <label for="displayPerPage">Results per page:</label>
-                <select id="displayPerPage" ng-model="myTableSettings.itemsPerPage" ng-options="item for item in selectOptions"></select>
+                <select id="displayPerPage" ng-model="itemsPerPage" ng-init="itemsPerPage = 3" ng-change="myTableSettings.setRows(itemsPerPage)" ng-options="item for item in selectOptions"></select>
             </div>
         </div>
 
@@ -59,18 +59,18 @@
         <nav ng-if="myTableSettings.getTotalPages() > 1">
             <ul  class="pagination" >
                 <!--First Page-->
-                <li ng-click="myTableSettings.setCurrentPage(1)">
+                <li ng-click="myTableSettings.setPage(1)">
                     <a href="javascript:void(0)" >
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li ng-repeat="page in myTableSettings.getTotalPagesArray() track by $index"  ng-class="{disabled:$index+1 == myTableSettings.getCurrentPage()}"   ng-click="myTableSettings.setCurrentPage($index+1)" >
-                    <a href="javascript:void(0)" ng-class="{active:$index+1 == myTableSettings.getCurrentPage() }">
+                <li ng-repeat="page in myTableSettings.getTotalPagesArray() track by $index"  ng-class="{disabled:$index+1 == myTableSettings.getPage()}"   ng-click="myTableSettings.setPage($index+1)" >
+                    <a href="javascript:void(0)" ng-class="{active:$index+1 == myTableSettings.getPage() }">
                         <span aria-hidden="true">{{$index+1}}</span>
                     </a>
                 </li>
                 <!--Last Page-->
-                <li  ng-click="myTableSettings.setCurrentPage(myTableSettings.getTotalPages())" >
+                <li  ng-click="myTableSettings.setPage(myTableSettings.getTotalPages())" >
                     <a href="javascript:void(0)" >
                         <span aria-hidden="true">&raquo;</span>
                     </a>

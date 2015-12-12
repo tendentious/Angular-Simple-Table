@@ -1,48 +1,88 @@
 angular.module("angular-simple-table",[])
     .directive('simpleTable',['$filter','$compile','filterFilter', function($filter,$compile,filterFilter) {
-        window.TableSettings = function (data){
-            this.data = data || null;
-            this.reverseSort = false;
-            this.orderField = null;
-
-            this.itemsPerPage = 25;
-            this.searchFields = {};
+        'use strict';
+        window.TableSettings = function (passedData){
+            var data = passedData || null;
+            var reverseSort = false;
             var currentPage = 1;
             var filteredData = null;
-            this.getCurrentPage = function(){return currentPage;};
-            this.setCurrentPage = function(nr){currentPage = nr;};
+            var rows = 25;
+            var orderField = null;
+            var searchFields = {};
+
+
+            //ReverseSort
+            this.setReverseSort = function(param){ reverseSort = param; };
+            this.getReverseSort = function(){ return reverseSort; };
+
+            //OrderField
+            this.setOrderField = function(param){ orderField = param; };
+            this.getOrderField = function(){ return orderField; };
+
+            //Data
+            this.setData = function(param){ data = param; };
+            this.getData = function(){ return data; };
+
+            //Rows per page
+            this.setRows = function(param){
+                this.setPage(1);
+                rows = param;
+            };
+            this.getRows = function(){ return rows; };
+
+            //Page nr
+            this.getPage = function(){return currentPage;};
+            this.setPage = function(nr){currentPage = nr;};
+
+            /**
+             * getTotalPagesArray
+             *
+             * @return {Array} - with length = total pages
+             */
             this.getTotalPagesArray = function(){
                 if(filteredData){
-                    return new Array(Math.ceil(filteredData.length/this.itemsPerPage))};
+                    return new Array(Math.ceil(filteredData.length/rows))};
             };
+
+            /**
+             *  getTotalPages
+             *
+             * @returns {number}
+             */
             this.getTotalPages = function(){
                 if(filteredData){
-                    return Math.ceil(filteredData.length/this.itemsPerPage)
+                    return Math.ceil(filteredData.length/rows)
                 }
             };
+
+            /**
+             * getFilteredData
+             *
+             * @returns {Array}  filtered data by search,rows per page and ordered
+             */
             this.getFilteredData = function(){
                 //convert to array
-                if(!(this.data instanceof Array) && typeof this.data === 'object' && this.data !== null){
-                    var keys = Object.keys(this.data)
-                    filteredData = this.data
+                if(!(data instanceof Array) && typeof data === 'object' && data !== null){
+                    var keys = Object.keys(data);
+                    filteredData = data;
                     filteredData = keys.map(function (key) {
                         return filteredData[key]; });
                 }else{
-                    filteredData = this.data;
+                    filteredData = data;
                 }
 
                 //searchBy
-                if(Object.keys(this.searchFields).length){
+                if(Object.keys(searchFields).length){
                     var result = [];
-                    for (var property in this.searchFields) {
-                        if (this.searchFields.hasOwnProperty(property)) {
+                    for (var property in searchFields) {
+                        if (searchFields.hasOwnProperty(property)) {
                             //search for each field
                             if(property.indexOf('.') === -1)
                             {
-                                var filtered = simpleSearch(this.searchFields[property],property,filteredData);
+                                var filtered = simpleSearch(searchFields[property],property,filteredData);
 
                             }else{
-                                var filtered = subArraySearch(this.searchFields[property],property,filteredData);
+                                var filtered = subArraySearch(searchFields[property],property,filteredData);
                             }
                             filtered.forEach(function(elem,index,arr){
                                 result.push(elem);
@@ -53,19 +93,19 @@ angular.module("angular-simple-table",[])
                     filteredData = remove_duplicates(result);
                 }
                 //orderBy
-                if(typeof this.orderField == 'string'){
-                    filteredData = $filter('orderBy')(filteredData, this.orderField.toLowerCase(), this.reverseSort);
+                if(typeof orderField == 'string'){
+                    filteredData = $filter('orderBy')(filteredData, orderField.toLowerCase(), reverseSort);
                 }
-                if(filteredData && this.data ){
+                if(filteredData && data ){
                     //filter Current Page and Number of Items Per Page
-                    var startIndex = (currentPage - 1) * this.itemsPerPage;
+                    var startIndex = (currentPage - 1) * rows;
                     //avoid non-existent page
                     if(startIndex > filteredData.length){
-                        this.setCurrentPage(1);
+                        this.setPage(1);
                     }
-                    return filteredData.slice(startIndex,startIndex + this.itemsPerPage);
+                    return filteredData.slice(startIndex,startIndex + rows);
                 }else{
-                    filteredData = this.data;
+                    filteredData = data;
                 }
 
             };
@@ -108,27 +148,41 @@ angular.module("angular-simple-table",[])
 
             }
 
+            /**
+             *  search
+             *
+             *  Searches through the data by one or more fields
+             *
+             * @param text | string  Search String
+             * @param field... | string  Name of the field to search by. From the second argument, every argument is a field to search by
+             */
             this.search = function(text,field){
                 currentPage = 1;
-                this.orderField = null;
-                this.searchFields = {};
+                orderField = null;
+                searchFields = {};
                 //search by one field
                 if(arguments.length<2){
                     var field = arguments[1] || '$';
-                    this.searchFields[field] = arguments[0];
-                }else{  //search by multiple fields
-
+                    searchFields[field] = arguments[0];
+                }else{
+                    //search by multiple fields
                     for (var i = 1; i < arguments.length; i++) {
                         var field = arguments[i];
-                        this.searchFields[field] = arguments[0];
+                        searchFields[field] = arguments[0];
                     }
                 }
-                console.log(this.searchFields);
             };
-            this.orderBy = function(field,noReverseToggle){
-                this.orderField = field;
-                if(!noReverseToggle){
-                    this.reverseSort = !this.reverseSort;
+            /**
+             *
+             *    Order By
+             *
+             * @param field | string The name of the field to order by
+             * @param keepReverseState  | boolean  If true - reverse state remains the same.
+             */
+            this.orderBy = function(field,keepReverseState){
+                orderField = field;
+                if(!keepReverseState){
+                    reverseSort = !reverseSort;
                 }
             };
         };
@@ -173,8 +227,8 @@ angular.module("angular-simple-table",[])
                                 var dataSort = allTds[item].getAttribute("data-sort-by");
                                 if(dataSort){
                                     var title = allTds[item].getAttribute("title") || '';
-                                    th.innerHTML = '<a href="javascript:void(0)" ng-click="'+simpleTable+'.orderBy(\''+dataSort+'\')" >'+
-                                        title + '&nbsp;&nbsp;<span ng-show="' + simpleTable+'.orderField == \''+dataSort+'\'"><span ng-show="!'+simpleTable+'.reverseSort">&#9650;</span><span ng-show="'+simpleTable+'.reverseSort">&#9660;</span></span></a>' ;
+                                    th.innerHTML = '<a href="javascript:void(0)" ng-click="'+simpleTable+'.orderBy(\''+dataSort+'\',true)" >'+
+                                        title + '&nbsp;&nbsp;<span ng-show="' + simpleTable+'.getOrderField() == \''+dataSort+'\'"><span ng-show="!'+simpleTable+'.getReverseSort()">&#9650;</span><span ng-show="'+simpleTable+'.getReverseSort()">&#9660;</span></span></a>' ;
                                 }else{
                                     th.innerHTML = allTds[item].getAttribute("title");
                                 }
