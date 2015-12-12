@@ -108,26 +108,26 @@ TableSettings object is used to pass settings to the table.
 
   Sets the data to be displayed in the table.
   
-    TableSettings.getTotalPagesArray()
+    getTotalPagesArray()
   
   Returns an array with length equal to total pages. Used in the paginator's ng-repeat directive.
   
-    TableSettings.getTotalPages()
+    getTotalPages()
   
   Returns the number of pages.
   
-    TableSettings.getFilteredData()
+    getFilteredData()
   
   Returns the data after it has been filtered, ordered, etc. This is used in the table's main ng-repeat directive.
   
-    TableSettings.search(text,field...)
+    search(text,field...)
   
   Filters the data by param 'text'. One or more fields can be specified (as distinct arguments) to search through
   (you can even search in sub arrays one level deep). Specifying no field will search through all fields.
   The field parameter is case-sensitive so passing "Name" as value when the table data has "name" as property will result in no match 
   at all and no data display in the table.
   
-    TableSettings.orderBy(field,keepReverseState)
+    orderBy(field,keepReverseState)
   
   Used to order data by field. The field parameter sets the field to order data by and is case-sensitive. 
   Every call to the method toggles the property reverseSort and consequently the ordering from ascending to descending and reverse.
