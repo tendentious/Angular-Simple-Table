@@ -24,20 +24,17 @@ angular.module("angular-simple-table",[])
             this.getData = function(){ return data; };
 
             //Rows per page
-            this.setRows = function(param){
-                this.setPage(1);
-                rows = param;
-            };
+            this.setRows = function(param){ this.setPage(1); rows = parseInt(param,10); };
             this.getRows = function(){ return rows; };
 
             //Page nr
             this.getPage = function(){return currentPage;};
-            this.setPage = function(nr){currentPage = nr;};
+            this.setPage = function(nr){currentPage = parseInt(nr,10);};
 
             /**
              * getTotalPagesArray
              *
-             * @return {Array} - with length = total pages
+             * @return {Array} - has length = total pages
              */
             this.getTotalPagesArray = function(){
                 if(filteredData){
@@ -47,7 +44,7 @@ angular.module("angular-simple-table",[])
             /**
              *  getTotalPages
              *
-             * @returns {number}
+             * @returns {integer}
              */
             this.getTotalPages = function(){
                 if(filteredData){
@@ -227,7 +224,7 @@ angular.module("angular-simple-table",[])
                                 var dataSort = allTds[item].getAttribute("data-sort-by");
                                 if(dataSort){
                                     var title = allTds[item].getAttribute("title") || '';
-                                    th.innerHTML = '<a href="javascript:void(0)" ng-click="'+simpleTable+'.orderBy(\''+dataSort+'\',true)" >'+
+                                    th.innerHTML = '<a href="javascript:void(0)" ng-click="'+simpleTable+'.orderBy(\''+dataSort+'\')" >'+
                                         title + '&nbsp;&nbsp;<span ng-show="' + simpleTable+'.getOrderField() == \''+dataSort+'\'"><span ng-show="!'+simpleTable+'.getReverseSort()">&#9650;</span><span ng-show="'+simpleTable+'.getReverseSort()">&#9660;</span></span></a>' ;
                                 }else{
                                     th.innerHTML = allTds[item].getAttribute("title");

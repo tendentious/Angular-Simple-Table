@@ -1,85 +1,85 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html ng-app="myApp">
-    <head>
-        <title>Angular Table</title> 
-        <link href="../Vendor/css/main.css" rel="stylesheet" type="text/css"/>
-        <link rel="shortcut icon" href="favicon.ico">
-    </head>
-    <body  ng-controller="main-controller">
-        <!--filter-->
-        <div class="filters">
-            <div class="filter">
-                <label for="sgeneral">General Search</label>
-                <input type="text" id="sgeneral" ng-model="mySearch" ng-change="myTableSettings.search(mySearch)" >
-            </div>
-            <div class="filter">
-                <label for="sname">Name Search</label>
-                <input type="text" id="sname" ng-model="nameSearch" ng-change="myTableSettings.search(nameSearch,'name')" >
-            </div>
-            <div class="filter">
-                <label for="scountry">Country Search</label>
-                <input type="text" id="scountry" ng-model="countrySearch" ng-change="myTableSettings.search(countrySearch,'country')" >
-            </div>
-            <div class="filter">
-                <label for="scountry">Eye Color Search</label>
-                <input type="text" id="seye" ng-model="eyeColorSearch" ng-change="myTableSettings.search(eyeColorSearch,'description.eye_color')" >
-            </div>
-            <div class="filter">
-                <label for="displayPerPage">Results per page:</label>
-                <select id="displayPerPage" ng-model="itemsPerPage" ng-init="itemsPerPage = 3" ng-change="myTableSettings.setRows(itemsPerPage)" ng-options="item for item in selectOptions"></select>
-            </div>
-        </div>
+<head>
+    <title>Angular Table</title>
+    <link href="../Vendor/css/main.css" rel="stylesheet" type="text/css"/>
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body  ng-controller="main-controller">
+<!--filter-->
+<div class="filters">
+    <div class="filter">
+        <label for="sgeneral">General Search</label>
+        <input type="text" id="sgeneral" ng-model="mySearch" ng-change="myTableSettings.search(mySearch)" >
+    </div>
+    <div class="filter">
+        <label for="sname">Name Search</label>
+        <input type="text" id="sname" ng-model="nameSearch" ng-change="myTableSettings.search(nameSearch,'name')" >
+    </div>
+    <div class="filter">
+        <label for="scountry">Country Search</label>
+        <input type="text" id="scountry" ng-model="countrySearch" ng-change="myTableSettings.search(countrySearch,'country')" >
+    </div>
+    <div class="filter">
+        <label for="scountry">Eye Color Search</label>
+        <input type="text" id="seye" ng-model="eyeColorSearch" ng-change="myTableSettings.search(eyeColorSearch,'description.eye_color')" >
+    </div>
+    <div class="filter">
+        <label for="displayPerPage">Results per page:</label>
+        <select id="displayPerPage" ng-model="itemsPerPage" ng-init="itemsPerPage = 3" ng-change="myTableSettings.setRows(itemsPerPage)" ng-options="item for item in selectOptions"></select>
+    </div>
+</div>
 
-        <!--simple-table attribute passes the settings-->
-        <table simple-table="myTableSettings" class="mainTableUsers"  >
-                <tr ng-repeat="person in myTableSettings.getFilteredData() track by $index">
-                    <td title="Id" data-sort-by="Id">
-                        {{person.id}}
-                    </td>
-                    <td title="Name" data-sort-by="Name">
-                        {{person.name}}
-                    </td>
-                    <!--not sortable-->
-                    <td title="Description">
+<!--simple-table attribute passes the settings-->
+<table simple-table="myTableSettings" class="mainTableUsers"  >
+    <tr ng-repeat="person in myTableSettings.getFilteredData() track by $index">
+        <td title="Id" data-sort-by="Id">
+            {{person.id}}
+        </td>
+        <td title="Name" data-sort-by="Name">
+            {{person.name}}
+        </td>
+        <!--not sortable-->
+        <td title="Description">
                         <span ng-repeat="description in person.description">
                            <p>Hair color: {{description.hair_color}}  </p>
                            <p>Eye color: <b>{{description.eye_color}} </b> </p>
                         </span>
-                    </td>
-                    <td  title='Country' data-sort-by="Country">
-                        {{person.country}}
-                    </td>
-                    <!--not sortable-->
-                    <td title='Age'>
-                        {{person.age}}
-                    </td>
-                </tr>
-        </table>
+        </td>
+        <td  title='Country' data-sort-by="Country">
+            {{person.country}}
+        </td>
+        <!--not sortable-->
+        <td title='Age'>
+            {{person.age}}
+        </td>
+    </tr>
+</table>
 
-        <nav ng-if="myTableSettings.getTotalPages() > 1">
-            <ul  class="pagination" >
-                <!--First Page-->
-                <li ng-click="myTableSettings.setPage(1)">
-                    <a href="javascript:void(0)" >
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li ng-repeat="page in myTableSettings.getTotalPagesArray() track by $index"  ng-class="{disabled:$index+1 == myTableSettings.getPage()}"   ng-click="myTableSettings.setPage($index+1)" >
-                    <a href="javascript:void(0)" ng-class="{active:$index+1 == myTableSettings.getPage() }">
-                        <span aria-hidden="true">{{$index+1}}</span>
-                    </a>
-                </li>
-                <!--Last Page-->
-                <li  ng-click="myTableSettings.setPage(myTableSettings.getTotalPages())" >
-                    <a href="javascript:void(0)" >
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+<nav ng-if="myTableSettings.getTotalPages() > 1">
+    <ul  class="pagination" >
+        <!--First Page-->
+        <li ng-click="myTableSettings.setPage(1)">
+            <a href="javascript:void(0)" >
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li ng-repeat="page in myTableSettings.getTotalPagesArray() track by $index"  ng-class="{disabled:$index+1 == myTableSettings.getPage()}"   ng-click="myTableSettings.setPage($index+1)" >
+            <a href="javascript:void(0)" ng-class="{active:$index+1 == myTableSettings.getPage() }">
+                <span aria-hidden="true">{{$index+1}}</span>
+            </a>
+        </li>
+        <!--Last Page-->
+        <li  ng-click="myTableSettings.setPage(myTableSettings.getTotalPages())" >
+            <a href="javascript:void(0)" >
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
-        <script src="../Vendor/JS/angular.min.js" type="text/javascript"></script>
-        <script src="../Vendor/JS/angular-simple-table.js" type="text/javascript"></script>
-        <script src="../Vendor/JS/myAngularApplication.js" type="text/javascript"></script>
-    </body>
+<script src="../Vendor/JS/angular.min.js" type="text/javascript"></script>
+<script src="../Vendor/JS/angular-simple-table.js" type="text/javascript"></script>
+<script src="../Vendor/JS/myAngularApplication.js" type="text/javascript"></script>
+</body>
 </html>

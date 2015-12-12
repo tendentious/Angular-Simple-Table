@@ -46,59 +46,67 @@ For the table content loop through the filtered data of the table settings varia
         </td>
     </tr>
 
-Note the attributes of the columns maked by the td elements in the ng-repeat directive. 
+Note the attributes of the columns marked by the td elements in the ng-repeat directive.
 The title attribute is the name of the column that will appear in the Table Head. 
 The optional data-sort-by attribute is used to make the column sortable by clicking on the title.
 
 ### Paginator
 
 To set up a paginator for the table you can copy the template from the public_html/index.html file. 
-If you have limited data to display and do not plan to use a paginator make sure the 'itemsPerPage' property 
-of the TableSettings object is set to value at least as high as the number of rows you intend to show.
+If you have limited data to display and do not plan to use a paginator make sure you use 'setRows()' method
+with the number of rows you intend to show as argument (defaults to 25).
 
 ### Filters
 
-You can set up a number of filters by using the 'searchBy' method of the TableSettings object:
+You can set up filters by using the 'search' method of the TableSettings object:
 
-    <input type="text" id="sgeneral" ng-model="mySearch" ng-change="myTableSettings.searchBy(mySearch)" >
+    <input type="text" ng-model="mySearch" ng-change="myTableSettings.search(mySearch,'country','description.eye_color')" >
 
-for a general filter or :
+The first parameter is a string (model in our case) which holds the text to search for. From the second argument forth
+you can pass any number of fields to search in (you can also search in subarrays one level deep).
+For general search (search in all fields) pass only the first argument (search string):
 
-    <input type="text" ng-model="nameSearch" ng-change="myTableSettings.searchBy(nameSearch, 'name')" >
+    <input type="text" ng-model="generalSearch" ng-change="myTableSettings.search(generalSearch)" >
 
-for a specific property search in the table data. Note that the second parameter is a string and is case-sensitive.
+Note that the field arguments are case-sensitive strings.
  
 ## Table Settings
 
 TableSettings object is used to pass settings to the table.
 
-### Properties
-
-    TableSettings.data   | Array
-  
-  The data to be displayed in the table.
-  
-    TableSettings.reverseSort   | Boolean
-  
-  Makes the filter reverse the order of the data( this boolean is only used in the orderBy method).
-  
-    TableSettings.orderField | String
-  
-  Automatically assigned by orderBy() method. Keeps track of the currently used field as order filter.
-  
-    TableSettings.itemsPerPage | Number
-
-  Limits the number of rows displayed on every page.
-  
 ### Methods
 
-    TableSettings.getCurrentPage()
+    getReverseSort()
   
+  Returns the a boolean specifying whether or not the order by field is done in reverse order.
+  
+    setReverseSort(boolean)
+  
+  Sets reverse sort field.
+
+    getOrderField()
+
+  Returns the of the field which is used to order the filtered data by.
+
+    setOrderField(fieldName)
+
+  Sets the field to order the data by.
+
+    getPage()
+
   Returns the current page number.
-  
-    TableSettings.setCurrentPage(nr)
-  
-  Sets the current page to be displayed.
+
+    setPage(nr)
+
+  Sets the current data to be displayed.
+
+    getData()
+
+  Returns the raw data displayed in the table (unfiltered, unordered).
+
+    setData(data)
+
+  Sets the data to be displayed in the table.
   
     TableSettings.getTotalPagesArray()
   
@@ -112,16 +120,17 @@ TableSettings object is used to pass settings to the table.
   
   Returns the data after it has been filtered, ordered, etc. This is used in the table's main ng-repeat directive.
   
-    TableSettings.searchBy(text,field)
+    TableSettings.search(text,field...)
   
-  Filters the data by param 'text'. If parameter field is set the filter will only run through the data property named by field.
+  Filters the data by param 'text'. One or more fields can be specified (as distinct arguments) to search through
+  (you can even search in sub arrays one level deep). Specifying no field will search through all fields.
   The field parameter is case-sensitive so passing "Name" as value when the table data has "name" as property will result in no match 
   at all and no data display in the table.
   
-    TableSettings.orderBy(field,noReverse)
+    TableSettings.orderBy(field,keepReverseState)
   
   Used to order data by field. The field parameter sets the field to order data by and is case-sensitive. 
-  Every call to the method toggles the property reverseSort and consequently the ordering order from ascending to descending and reverse.
-  The second boolean parameter is used to disable the toggling effect. Passing true for noReverse will result in keeping the ordering 
-  ascending or descending (according to property TableSettings.reverseSort) for the current method call.
+  Every call to the method toggles the property reverseSort and consequently the ordering from ascending to descending and reverse.
+  The second boolean parameter is used to disable the toggling effect. Passing true for keepReverseState will result in keeping the ordering
+  ascending or descending (according to property reverseSort) for the current method call.
   
