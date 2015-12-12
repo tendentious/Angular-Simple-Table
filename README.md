@@ -21,7 +21,7 @@ The data you wish to show in the table can be passed in the constructor or to th
 or
 
     $scope.myTableSettings = new TableSettings();
-    $scope.myTableSettings.data = myData;
+    $scope.myTableSettings.setData(myData);
 
 In your html file add the attribute simple-table to the table you wish to bind with the angular directive.
 The value of this attribute should be the name of the scope variable that holds the table settings:
