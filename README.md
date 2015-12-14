@@ -8,7 +8,7 @@ Working example on : http://plnkr.co/sJUFaBLVlfIFVhwBmAqC?p=info
 ## How to use
 
 ### Include
-Simply include the module in your html file (normal or minified fil)e and add the dependency `angular-simple-table` in your application like this :
+Simply include the module in your html file (normal or minified file from the Vendor/js folder) and add the dependency `angular-simple-table` in your application like this :
 
     angular.module("myApp",["angular-simple-table"])
 
