@@ -1,3 +1,16 @@
+/**
+* Name:  Angular Simple Table
+*
+* Version: 1.0.0
+*
+* Author: Andrei Pericleanu
+*		  andrei_pericleanu@yahoo.com  
+* 
+*  
+*/
+
+
+
 angular.module("angular-simple-table",[])
     .directive('simpleTable',['$filter','$compile','filterFilter', function($filter,$compile,filterFilter) {
         'use strict';
