@@ -170,9 +170,9 @@ angular.module("angular-simple-table",[])
                 currentPage = 1;
                 orderField = null;
                 searchFields = {};
-                //search by one field
+                //search by all fields field
                 if(arguments.length<2){
-                    var field = arguments[1] || '$';
+                    var field = '$';
                     searchFields[field] = arguments[0];
                 }else{
                     //search by multiple fields
